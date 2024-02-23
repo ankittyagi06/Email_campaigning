@@ -1,0 +1,42 @@
+.compaign{
+    
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 90vh;
+    background-color: rgb(57, 54, 54);
+    color: aliceblue;
+    padding:2%;
+}
+.mailing-list{
+    height: 10%;
+    width: 100%;
+    padding: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+   justify-content: space-between;
+    align-items: center;
+    
+}
+.Get-list{
+    
+    color: rgb(238, 85, 102);
+    border-radius: 9px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: rgb(34, 36, 37);
+    cursor: pointer;
+    transition: border-color 0.25s;
+
+}
+.display-mailing-list{
+    
+}
+.list-items{
+    color: antiquewhite;
+}
