@@ -1,0 +1,52 @@
+.campaign-list-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px; /* Adjust width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .filter-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .filter-container label {
+    margin-right: 10px;
+  }
+  
+  .campaign-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .campaign-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer; /* Enables hover effects */
+  }
+  
+ 
+  
+  .campaign-details {
+    display: flex;
+    align-items: center;
+  }
+  
+  .campaign-name {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .campaign-status {
+    color: #333;
+  }
+  

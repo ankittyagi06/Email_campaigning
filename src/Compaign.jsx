@@ -3,6 +3,7 @@ import './compaign.css'
 import { useState } from 'react';
 import Papa from "papaparse";
 import Emailtemplate from './Emailtemplate';
+import Emailvalidation from './Emailvalidation';
 function Compaign() {
 
     const [mailinglist,setmailinglist]=useState(null);
@@ -12,6 +13,7 @@ function Compaign() {
     const fileInputRef = useRef(null);
     const [open, setopen] = useState(false)
     const [showAll, setshowAll] = useState(true)
+
     function openFileInput() {
         fileInputRef.current.click();
     }
@@ -27,16 +29,15 @@ function Compaign() {
                 return;
             }
             setmailinglist(inputfile);
-            
         }
+        
         handleParse();
     }
 
     const handleParse = () => {
         setopen(true);
         // If user clicks the parse button without a file, show an error
-        if (!mailinglist) return alert("Enter a valid file");
-    
+        
         // Initialize a reader which allows the user to read any file or blob.
         const reader = new FileReader();
     
@@ -67,14 +68,17 @@ function Compaign() {
     const toggleShowAll = () => {
         setshowAll(!showAll);
       };
+
       const handleopen=()=>{
 
         if(open){
             setopen(false);
         }else{
+
             handleParse();
             setopen(true)
         }
+
       }
 
 
@@ -96,7 +100,7 @@ function Compaign() {
 
         <div className='display-mailing-list'>
             
-        {mailinglist ? <button onClick={handleopen}> {open? 'Hide List': 'open list'}</button> : 'List is not fetched properly'}
+        {mailinglist ? <button onClick={handleopen}> {open? 'Hide List': 'open list'}</button> : 'List is not fetched yet'}
         
         </div>
        
@@ -112,10 +116,12 @@ function Compaign() {
             ))}
             <button onClick={toggleShowAll}>
         {showAll ? 'Show Less' : 'Show All'}
+        
       </button> 
                 </div>
         }
-        <Emailtemplate/>
+        <Emailvalidation/>
+        <Emailtemplate recipients={data}/>
         
     </div>
   )

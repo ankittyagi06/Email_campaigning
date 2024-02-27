@@ -1,0 +1,13 @@
+.senderemail{
+    padding: 0.2rem;
+    margin: 0.1rem;
+}
+.emailsummary{
+    display: flex;
+    flex-direction: column;
+
+}
+.btn{
+    margin-left: 4px;
+    color: rgb(238, 85, 102);
+}
