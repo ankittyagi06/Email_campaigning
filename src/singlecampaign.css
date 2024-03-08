@@ -1,0 +1,8 @@
+.singlecampaign{
+    display: flex;
+    flex-direction: column;
+}
+.campaign-details{
+    display: flex;
+    flex-direction: column;
+}
