@@ -18,7 +18,7 @@ const SingleInputComponent = () => {
   // Function to handle input change
   const handleInputChange = (event) => {
     dispatch(setname({name: date}));
-    Navigate('/create-campaign');
+    Navigate('/campaign');
   };
 
   return (

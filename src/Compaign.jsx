@@ -3,13 +3,13 @@ import './compaign.css'
 import { useState } from 'react';
 import Papa from "papaparse";
 import Emailtemplate from './Emailtemplate';
-import Emailvalidation from './Emailvalidation';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 function Compaign() {
     const [nameofcampaign, setnameofcampaign] = useState('')
     const [mailinglist,setmailinglist]=useState(null);
     const [error, setError] = useState("");
     const [data, setData] = useState([]);
-    const [tempdata, settempdata] = useState(null)
     const fileInputRef = useRef(null);
     const [open, setopen] = useState(false)
     const [showAll, setshowAll] = useState(true)
@@ -17,10 +17,14 @@ function Compaign() {
     const [segmentname, setsegmentname] = useState('')
     const [segmentid, setsegmentid] = useState('')
     const [openinput, setopeninput] = useState(false)
+    const campaignname = useSelector((state)=>state.campaign.name);
+    
+    const navigate = useNavigate();
+
     function openFileInput() {
         fileInputRef.current.click();
     }
-        // function to get the file as input
+
     function getfileinput(e){ 
         const allowedExtensions = ["csv"];
         setError("");
@@ -34,25 +38,6 @@ function Compaign() {
             setmailinglist(inputfile);
         }
         handleParse();
-    }
-
-    const uploadcsvtos3=async()=>{
-
-         //transform csv to desired format 
-            
-        
-
-        // upload mailing list to s3  
-
-
-
-
-        // get import command 
-
-        // create segment command 
-
-        // create campaign command 
-
     }
 
     const handleParse = () => {
@@ -109,21 +94,7 @@ function Compaign() {
     }
 
     const createnewsegment=async()=>{
-
-        setopeninput(false);
-        try{
-       await fetch(`http://localhost:3000/uploadtos3/${segmentname}`).then(response=>response.json())
-       .then(data=>{if(data.status==="success")
-       {alert("success")}
-       else
-       {alert("Something went wrong")}});
-
-        }
-        catch(e){
-            console.log('error', e)
-            return;
-  }
-       
+          navigate('/newsegment');
         //.then(response=>response.json()).then(data=>{console.log('data', data)});
     }
     const choosesegment = (segid) => {
@@ -134,14 +105,14 @@ function Compaign() {
   return (
 
     <div className='compaign'>
+        <h4>Your Campaign Name: {campaignname}</h4>
         <div className='mailing-list'>
-            <button className='Get-list' onClick={getallsegments}>choose your Mailing List or create new</button>
+            <button className='Get-list' onClick={getallsegments}>Click Here to choose from your exixting Segments </button>
         </div>
 
         <div className='display-mailing-list'>
             
         {/* {mailinglist ? <button onClick={handleopen}> {open? 'Hide List': 'open list'}</button> : 'List is not fetched yet'} */}
-        <h5>your segments</h5>
 
         {
             segments?.map((segment)=>(
@@ -158,9 +129,7 @@ function Compaign() {
 
         <p>OR</p>
 
-        {!openinput && <button onClick={()=>{setopeninput(true)}}>New segment</button>}
-        { openinput && <input type="text" placeholder='Enter segment name' className='segement-input' onChange={(e)=>setsegmentname(e.target.value)} />}
-        {openinput&&<button onClick={createnewsegment}>Create new segment</button> }
+        {!openinput && <button onClick={createnewsegment}>New segment</button>}
        <p>{segmentname}</p>
 
         {open && <div className='list-items' style={{ marginTop: "3rem" }}>
@@ -176,11 +145,9 @@ function Compaign() {
         {showAll ? 'Show Less' : 'Show All'}
         
       </button> 
-                </div>
+    </div>
         }
-
-
-        <Emailtemplate recipients={data} campaignname={nameofcampaign}/>
+        <Emailtemplate segmentid={segmentid}/>
         
     </div>
   )

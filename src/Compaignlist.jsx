@@ -2,41 +2,23 @@ import React, { useState,useEffect } from 'react';
 
 import './CampaignList.css'; // Import the CSS file
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setid } from './features/counter/roomslice';
 const CampaignList = () => {
+  const campaignId = useSelector((state)=>state.campaign.campaignId);
+  const email = useSelector((state)=>state.User.email);
   const dispatch=useDispatch();
   const navigate= useNavigate();
   const [Campaigns, setCampaigns] = useState([])
   const [userEmail, setUserEmail] = useState(null);
   const [userId, setuserId] = useState('')
+
   
   useEffect(() => {
-
+    setUserEmail(email);
     const retrievedEmail = localStorage.getItem('userEmail'); // Retrieve from local storage (optional)
     setUserEmail(retrievedEmail || window.location.state?.email); // Check passed state or local storage
-
   }, []);
-  
-
-  // useEffect(() => {
-  //   // Fetch campaign data from the server-side API endpoint
-  //   const fetchCampaigns = async () => {
-
-  //     try {
-  //       const response = await fetch('http://localhost:3000/campaigns').then(res=>res.json()); // Replace with your actual API endpoint URL
-  //       console.log('response', response)
-  //       setCampaigns(response);
-  //     } catch (error) {
-  //       console.error("Error fetching campaigns:", error);
-  //       // Handle errors appropriately, e.g., display an error message to the user
-  //     }
-
-  //   };
-
-  //   fetchCampaigns();
-
-  // }, []);
 
   const getUserFromToken = async () => {
     try {
@@ -61,31 +43,20 @@ const CampaignList = () => {
     // }
 
   }, []);
-  
-
-  // useEffect(() => {
-  //   const checkAppExistence = async () => {
-  //     if (userId) {
-  //       try {
-  //         const response = await fetch(`http://localhost:3000/users/${userId}`); 
-  //         console.log(response.status);
-  //       } catch (error) {
-  //         console.error(error);
-  //         // Handle errors appropriately, e.g., display an error message
-  //       }
-  //     }
-  //   };
-
-  //   checkAppExistence();
-  // }, [userId]);
 
   useEffect(() => {
+    const updatecampaigns = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/campaigns/update/${email}`); 
+          console.log(response.status);
+        } catch (error) {
+          console.error(error);
+        }
+    };
+    updatecampaigns();
+  }, []);
 
-    // if (!isAuthenticated) {
-    //   // Handle case when user is not logged in (e.g., redirect to login)
-    //   return;
-    // }
-
+  useEffect(() => {
     const fetchCampaigns = async () => {
       try {
 
@@ -126,19 +97,10 @@ const CampaignList = () => {
   });
 
   const getCampaignDetails=async(id)=>{
-    
     dispatch(setid({id: id}));
-    navigate('/campaign');
-    
-    // try {
-    //   const response = await fetch(`http://localhost:3000/campaigns/getcamp/${id}`).then(res=>res.json()).then(data=>console.log('data', data.response)) // Replace with your actual API endpoint URL
-      
-      
-    // } catch (error) {
-    //   console.error("Error fetching campaigns:", error);
-    //   // Handle errors appropriately, e.g., display an error message to the user
-    }
-  
+    console.log('id', campaignId);
+    navigate('/campaign-details');
+  }
 
   return (
     <div className="campaign-list-container">
@@ -160,7 +122,7 @@ const CampaignList = () => {
             <div className="campaign-details">
               <span className="campaign-name">{campaign.name}</span>
               <span className="campaign-status">{campaign.status}</span>
-              <button onClick={() => getCampaignDetails(campaign.Id)}>View Details</button>
+              <button onClick={() => getCampaignDetails(campaign.Id)} disabled={campaign.status==='SCHEDULED'}>View Details</button>
             </div>
           </li>
         ))}

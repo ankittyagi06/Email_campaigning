@@ -5,7 +5,7 @@ const generateEmail = () => faker.internet.email();
 
 const EmailCSVGenerator = () => {
   
-  const emails = Array.from({ length: 1000 }, generateEmail);
+  const emails = Array.from({ length: 3 }, generateEmail);
 
   // Function to convert email addresses to CSV format
   const convertToCSV = () => {

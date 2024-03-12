@@ -6,7 +6,7 @@ import RoomReducer from '../features/counter/roomslice'
 
 export default configureStore({
   reducer: {
-    counter: counterReducer,
+    User: counterReducer,
     campaign:RoomReducer,
   },
   
