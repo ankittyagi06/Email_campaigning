@@ -89,7 +89,6 @@ const LoginSignupForm = () => {
              dispatch(setemail({email:formData.email}));
                 localStorage.setItem('userEmail', formData.email);
                 localStorage.setItem('auth', JSON.stringify(response.data.token));
-                
                 navigate('/allcampaigns',{ state: { email: formData.email } });
            }catch(err){
             console.log(err);
@@ -111,10 +110,9 @@ const LoginSignupForm = () => {
             const response = await axios.post(url, formData);
              toast.success("Login successfull");
              dispatch(setemail({email:formData.email}));
-                localStorage.setItem('userEmail', formData.email);
-                
-                localStorage.setItem('auth', JSON.stringify(response.data.token));
-                navigate('/allcampaigns', { state: { email: formData.email } });
+             localStorage.setItem('userEmail', formData.email);
+             localStorage.setItem('auth', JSON.stringify(response.data.token));
+             navigate('/allcampaigns', { state: { email: formData.email } });
            }catch(err){
             console.log(err);
              toast.error(err.message);
@@ -129,11 +127,13 @@ const LoginSignupForm = () => {
         console.log('Check')
         toast("Wow so easy!");
       }
+
   return (
     <div className='container'>
-      <h2>{isSignup ? 'Signup' : 'Login'}</h2>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <form onSubmit={handleRegisterSubmit} className='form'>
+      <form onSubmit={handleRegisterSubmit} className='login-form'>
+      <h2 className='form-header'>{isSignup ? 'Signup' : 'Login'}</h2>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}  
+        <div className='form-row'>          
       {isSignup&&<label htmlFor="name">First Name:</label>}
       {isSignup&&<input className='input'
           type="text"
@@ -142,8 +142,11 @@ const LoginSignupForm = () => {
           value={formData.name}
           onChange={handleChange}
           required
-        />       } 
-      {isSignup&&<label htmlFor="lastname">lastname:</label>}
+        />       }
+        </div>
+
+        <div className='form-row'>
+        {isSignup&&<label htmlFor="lastname">lastname:</label>}
       {isSignup&&<input className='input'
           type="text"
           id="lastname"
@@ -151,7 +154,10 @@ const LoginSignupForm = () => {
           value={formData.lastname}
           onChange={handleChange}
           required
-        />       } 
+        />       }
+        </div> 
+
+        <div className='form-row'>
         <label htmlFor="email">Email:</label>
         <input className='input'
           type="email"
@@ -161,6 +167,9 @@ const LoginSignupForm = () => {
           onChange={handleChange}
           required
         />
+        </div>
+        <div className='form-row'>
+          
         <label htmlFor="password" className='label'>Password:</label>
         <input className='input'
           type="password"
@@ -170,7 +179,10 @@ const LoginSignupForm = () => {
           onChange={handleChange}
           required
         />
-      {isSignup&&<label htmlFor="lastname">confirmPassword:</label>}
+
+        </div>
+        <div className='form-row'>
+        {isSignup&&<label htmlFor="lastname">confirmPassword:</label>}
       {isSignup&&<input className='input'
           type="password"
           id="confirmPassword"
@@ -179,14 +191,19 @@ const LoginSignupForm = () => {
           onChange={handleChange}
           required
         />       } 
+        </div>
+        <div className="form-row">
         <button type="submit" className='button'>{isSignup ? 'Signup' : 'Login'}</button>
-      </form>
-      <p>
+        </div>
+        <div className='form-row'>
         {isSignup ? 'Already have an account?' : 'Don\'t have an account?'}
-        <button type='submit' onClick={toggleMode}> {isSignup ? 'Login' : 'Signup'}</button>
-      </p>
+        <button className='loginorsignup-btn'type='submit' onClick={toggleMode}> {isSignup ? 'Login' : 'Signup'}</button>
+      </div>
+      </form>
+
+      
     </div>
-  );
+  );s
 };
 
 export default LoginSignupForm;

@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import store from './App/store'
 import { Provider } from 'react-redux'
-
+import 'semantic-ui-css/semantic.min.css'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 

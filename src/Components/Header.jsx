@@ -7,25 +7,24 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['PRODUCTS', 'PRICING', 'Analytics',"Segments"];
+const urls = ['/', '/', '/','/allsegments'];
 
 function ResponsiveAppBar() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   
   const [ token, setToken ] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const [Username, setUsername] = useState('')
-
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -43,9 +42,9 @@ function ResponsiveAppBar() {
   };
   const handlelogout =()=>{
     localStorage.removeItem('auth')
-    window.location.reload('/')
-  
-    
+    setUsername('');
+    setToken('');
+    navigate('/');
   }
   const decodeToken = (token) => {
     try {
@@ -55,6 +54,11 @@ function ResponsiveAppBar() {
       return null;
     }
   };
+  const handlepageclick = (index)=> {
+    console.log('index',index)
+    const url = urls[index];
+    navigate(url);
+  }
 
   useEffect(() => {
     const getuser =()=>{
@@ -69,7 +73,7 @@ function ResponsiveAppBar() {
   
 
   return (
-    <AppBar position="static" color='transparent'>
+    <AppBar position="static" color='primary' className='Header'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -87,7 +91,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            <img src="https://1jy92e.p3cdn1.secureserver.net/wp-content/uploads/2024/02/zentrades-white-logo-2048x282-1.png" style={{height:'12px',backgroundColor:'black'}} alt="" />
+          <img src="https://1jy92e.p3cdn1.secureserver.net/wp-content/uploads/2024/02/zentrades-white-logo-2048x282-1.png" style={{height:'15px',backgroundColor:'black'}} alt="" onClick={()=>{navigate('/')}}/>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -119,9 +123,9 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((page,index) => (
+                <MenuItem key={page} onClick={()=>handlepageclick(index)}>
+                  <Typography textAlign="center" >{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -139,10 +143,9 @@ function ResponsiveAppBar() {
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
-              textDecoration: 'none',
             }}
           >
-        <img src="https://1jy92e.p3cdn1.secureserver.net/wp-content/uploads/2024/02/zentrades-white-logo-2048x282-1.png" style={{height:'12px',backgroundColor:'black'}} alt="" />
+        <img src="https://1jy92e.p3cdn1.secureserver.net/wp-content/uploads/2024/02/zentrades-white-logo-2048x282-1.png" style={{height:'12px'}} alt="" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -157,10 +160,9 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings" color='primary'>
+            <Tooltip title="Open user menu" color='primary'>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {token ? <p>{Username}</p> : 'Login'}
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {token ? <span>{Username}</span> : 'Login'}
               </IconButton>
             </Tooltip>
             <Menu
@@ -180,7 +182,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
                 <MenuItem  onClick={handleCloseUserMenu}>
-                  <Typography onClick={handlelogout} textAlign="center">Log out</Typography>
+                 {token? <Typography onClick={handlelogout} textAlign="center">Log out</Typography>:null}
                 </MenuItem>
               
             </Menu>

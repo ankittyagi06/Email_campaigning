@@ -1,31 +1,16 @@
-.single-input-container {
-    height: 80vh;
-    width: 80vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    border: 5px solid white;
-  }
-  
-  .bordered-component {
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .custom-input {
-    padding: 20px;
-    font-size: 16px;
-    border: none; /* Remove input border */
-    outline: none;
-    width: 200px; /* Ensure the input takes up full width */
-  }
-  
-  .custom-input:focus {
-    border-color: #007bff;
-  }
-  
+.campaign-name-cointainer{
+  position: relative;
+  height: 50%;
+  width: 50%;
+  padding: auto;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.bordered-component{
+  display: flex;
+  flex-direction: column;
+}
+label{
+  padding: 5px;
+}

@@ -11,30 +11,26 @@ const SingleInputComponent = () => {
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     return new Date(date).toLocaleDateString('en-US', options)+' campaign';
   };
-
   const currentDate = formatDate(new Date());
-
   const [date, setDate] = useState(currentDate);
-  // Function to handle input change
-  const handleInputChange = (event) => {
+  const handlenext = () => {
     dispatch(setname({name: date}));
     Navigate('/campaign');
   };
 
   return (
-    <div className="single-input-container">
+    <div className="campaign-name-cointainer">
       <div className="bordered-component">
         <label htmlFor="">Name Your Campaign</label>
         <input
           type="text"
           value={date}
-          onChange={(e)=>{setDate(e.target.value)}}
+          onChange={(e)=>setDate(e.target.value)}
           className="custom-input"
           placeholder='Enter your Campaign name'
         />
       </div>
-      <button onClick={handleInputChange}>Next</button>
-      <p>{campaignname}</p>
+      <button onClick={handlenext}>Next</button>
     </div>
   );
 };

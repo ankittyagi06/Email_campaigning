@@ -4,7 +4,8 @@ export const roomslice = createSlice({
   name: 'campaign',
   initialState: {
     campaignId: 'Ankit tyagi',
-    name: 'Campaign'
+    name: 'Campaign',
+    segmentId:''
   },
   reducers: {
     setid: (state,action) => {
@@ -17,11 +18,13 @@ export const roomslice = createSlice({
     },
     setname:(state,action)=>{
       state.name=action.payload.name;
+    },
+    setsegmentId:(state, action)=>{
+      state.segmentId=action.payload.segmentId;
     }
-
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setid,setname } = roomslice.actions
+export const { setid,setname,setsegmentId} = roomslice.actions
 export default roomslice.reducer

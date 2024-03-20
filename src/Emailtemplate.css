@@ -1,16 +1,9 @@
-.senderemail{
-    padding: 0.2rem;
-    margin: 0.1rem;
+.create-campaign-form{
+    width: 80%;
 }
-.emailsummary{
-    display: flex;
-    flex-direction: column;
-
+.Emailtemplate{
+    width: 80%;
 }
-.btn{
-    margin-left: 4px;
-    color: rgb(238, 85, 102);
-}
-.alltemplates{
-    border: 2px solid white;
+.new-template-btn{
+    height: 50%;
 }
